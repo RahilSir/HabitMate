@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavBar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="20dp">
+
+            <!-- App Logo -->
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="142dp"
+                android:layout_height="101dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="HabitNow Logo"
+                android:src="@drawable/habitnow" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:text="HabitMate"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- Motivation Quote -->
+            <TextView
+                android:id="@+id/motivationQuote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading quote..."
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="16dp" />
+
+            <!-- Add Habit Button -->
+            <Button
+                android:id="@+id/addHabitButton"
+                android:text="Add Habit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4CAF50"
+                android:textColor="@android:color/white" />
+
+            <!-- Habit List -->
+            <ListView
+                android:id="@+id/habitListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"
+                android:paddingTop="8dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="8dp"
+        android:background="#F0F0F0">
+
+        <Button
+            android:id="@+id/homeNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Home"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="#795548"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <Button
+            android:id="@+id/progressNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Progress"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="#616161"
+            android:textSize="10sp"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <Button
+            android:id="@+id/settingsNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settings"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="#616161"
+            android:textSize="10sp"
+            android:backgroundTint="@android:color/transparent"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".ProgressActivity">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavBar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <!-- 1. App Logo / Image -->
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="131dp"
+                android:layout_height="136dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:contentDescription="HabitNow Logo"
+                android:src="@drawable/habitnow" />
+
+            <!-- Main Content Area -->
+            <TextView
+                android:id="@+id/progressTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Habit Progress"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:paddingBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/progressSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Track your habit streaks and achievements here!"
+                android:gravity="center"
+                android:paddingBottom="32dp"
+                android:textSize="16sp"/>
+
+            <!-- Circular Progress with Center Text -->
+            <FrameLayout
+                android:layout_width="194dp"
+                android:layout_height="194dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp">
+
+                <!-- Circular ProgressBar -->
+                <ProgressBar
+                    android:id="@+id/circularProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/circular_progress"
+                    android:progressTint="#4CAF50" />
+
+                <!-- Centered Text -->
+                <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0%"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+
+            <!-- Completed Habits Header -->
+            <TextView
+                android:id="@+id/completedHabitsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="16dp"
+                android:text="Completed Habits"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <!-- Completed Habits Container instead of ListView -->
+            <LinearLayout
+                android:id="@+id/completedHabitsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="8dp"
+        android:background="#F0F0F0">
+
+        <Button
+            android:id="@+id/homeNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Home"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="#616161"
+            android:textSize="10sp"
+            android:backgroundTint="@android:color/transparent"/>
+
+
+        <Button
+            android:id="@+id/progressNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_weight="1"
+            android:text="Progress"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="#795548"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <Button
+            android:id="@+id/settingsNavBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settings"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textSize="10sp"
+            android:textColor="#616161"
+            android:backgroundTint="@android:color/transparent"/>
+    </LinearLayout>
+
+</RelativeLayout>
+
