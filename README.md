@@ -74,6 +74,29 @@ Click Run ▶️ to build and launch the app.
 ```gradle
 implementation 'com.google.firebase:firebase-database:20.3.0'
 implementation 'com.google.firebase:firebase-analytics:21.5.0'
+// ANDROIDX & CORE LIBRARIES
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+
+    // FIREBASE - Using Bill of Materials (BOM) for safe versioning
+    // The BOM allows you to omit versions for individual Firebase libraries
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // GSON for easy JSON parsing (or use kotlinx.serialization)
+    implementation("com.google.code.gson:gson:2.10.1")
+
+
+    // Firebase Realtime Database KTX
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    // Other Firebase dependencies you may need (like Auth for user ID)
+    implementation("com.google.firebase:firebase-auth-ktx")
 
 
 
