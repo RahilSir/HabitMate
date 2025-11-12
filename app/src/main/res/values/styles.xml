@@ -13,4 +13,10 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
+    <style name="GreenTimePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#4CAF50</item>
+        <item name="android:textColorPrimary">#4CAF50</item>
+        <item name="colorControlActivated">#4CAF50</item>
+    </style>
+
 </resources>

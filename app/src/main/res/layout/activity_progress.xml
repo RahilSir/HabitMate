@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ProgressActivity">
 
     <!-- Scrollable content -->
@@ -26,7 +25,7 @@
                 android:layout_height="136dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:contentDescription="HabitNow Logo"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/habitnow" />
 
             <!-- Main Content Area -->
@@ -34,7 +33,7 @@
                 android:id="@+id/progressTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Habit Progress"
+                android:text="@string/your_habit_progress"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -44,7 +43,7 @@
                 android:id="@+id/progressSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Track your habit streaks and achievements here!"
+                android:text="@string/progress_subtitle"
                 android:gravity="center"
                 android:paddingBottom="32dp"
                 android:textSize="16sp"/>
@@ -74,12 +73,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="0%"
+                    android:text="@string/progress_percentage"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </FrameLayout>
 
+            <!-- achievements-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_achievements"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/badgesContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp" />
+            </HorizontalScrollView>
 
             <!-- Completed Habits Header -->
             <TextView
@@ -88,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="16dp"
-                android:text="Completed Habits"
+                android:text="@string/completed_habits"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -119,12 +139,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home"
+            android:text="@string/nav_home"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#616161"
             android:textSize="10sp"
             android:backgroundTint="@android:color/transparent"/>
-
 
         <Button
             android:id="@+id/progressNavBtn"
@@ -132,7 +151,7 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:layout_weight="1"
-            android:text="Progress"
+            android:text="@string/nav_progress"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#795548"
             android:textStyle="bold"
@@ -143,7 +162,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Settings"
+            android:text="@string/nav_settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="10sp"
             android:textColor="#616161"
@@ -151,4 +170,3 @@
     </LinearLayout>
 
 </RelativeLayout>
-

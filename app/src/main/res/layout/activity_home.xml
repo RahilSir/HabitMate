@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent">
 
     <!-- Scrollable Content -->
@@ -25,13 +24,13 @@
                 android:layout_height="101dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="HabitNow Logo"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/habitnow" />
 
             <!-- Title -->
             <TextView
                 android:id="@+id/titleText"
-                android:text="HabitMate"
+                android:text="@string/app_name"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="40dp"
@@ -43,7 +42,7 @@
                 android:id="@+id/motivationQuote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loading quote..."
+                android:text="@string/loading_quote"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:padding="16dp" />
@@ -51,7 +50,7 @@
             <!-- Add Habit Button -->
             <Button
                 android:id="@+id/addHabitButton"
-                android:text="Add Habit"
+                android:text="@string/add_habit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#4CAF50"
@@ -69,7 +68,6 @@
         </LinearLayout>
     </ScrollView>
 
-
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
@@ -85,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home"
+            android:text="@string/nav_home"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#795548"
             android:textStyle="bold"
@@ -97,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Progress"
+            android:text="@string/nav_progress"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#616161"
             android:textSize="10sp"
@@ -108,7 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Settings"
+            android:text="@string/nav_settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#616161"
             android:textSize="10sp"
@@ -116,4 +114,3 @@
     </LinearLayout>
 
 </RelativeLayout>
-

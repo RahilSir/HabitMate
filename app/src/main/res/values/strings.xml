@@ -1,3 +1,106 @@
 <resources>
     <string name="app_name">HabitTracker</string>
+
+
+    <string name="default_web_client_id">1046030779275-pqm4u53a8i2cmu5dth6sufatjallo8d5.apps.googleusercontent.com</string>
+
+
+    <!-- Home Screen -->
+    <string name="home_title">Home</string>
+    <string name="add_habit">Add Habit</string>
+    <string name="no_habits">No habits yet</string>
+    <string name="motivation_quote">Motivation for the day</string>
+
+    <!-- Add Habit Screen -->
+    <string name="add_new_habit">Add New Habit</string>
+    <string name="habit_name">Habit Name</string>
+    <string name="habit_name_hint">e.g., Read a book</string>
+    <string name="duration">Duration (Days)</string>
+    <string name="duration_hint">e.g., 21</string>
+    <string name="reminder_time">Reminder Time</string>
+    <string name="select_time">Select Time</string>
+    <string name="save_habit">Save Habit</string>
+    <string name="select_days">Select Days</string>
+    <string name="days_of_week">Days of the Week</string>
+
+    <!-- Days of the week -->
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
+    <!-- Day abbreviations -->
+    <string name="day_monday_short">M</string>
+    <string name="day_tuesday_short">T</string>
+    <string name="day_wednesday_short">W</string>
+    <string name="day_thursday_short">Th</string>
+    <string name="day_friday_short">F</string>
+    <string name="day_saturday_short">Sa</string>
+    <string name="day_sunday_short">Su</string>
+
+    <!-- Progress Screen -->
+    <string name="progress_title">Progress</string>
+    <string name="completed_habits">Completed Habits</string>
+    <string name="no_completed_habits">No completed habits yet. Keep going! 💪</string>
+    <string name="your_achievements">Your Achievements</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Manage your account preferences and notifications here.</string>
+    <string name="language">Language</string>
+    <string name="switch_language">Switch Language</string>
+    <string name="switch_language_title">Switch Language</string>
+    <string name="dark_mode">Enable Dark Mode</string>
+    <string name="export_data">Export Data</string>
+    <string name="logout">Logout</string>
+    <string name="offline_mode">Offline Mode</string>
+
+    <!-- Notifications -->
+    <string name="habit_reminder">Time for your habit! 💪</string>
+    <string name="dont_forget">Don\'t forget:</string>
+    <string name="streak_celebration">🔥 Amazing %d Day Streak! 🔥</string>
+
+    <!-- Badges -->
+    <string name="badge_getting_started">Getting Started</string>
+    <string name="badge_week_warrior">Week Warrior</string>
+    <string name="badge_monthly_master">Monthly Master</string>
+    <string name="badge_perfect_day">Perfect Day</string>
+
+    <!-- Toast Messages -->
+    <string name="habit_saved">Habit saved!</string>
+    <string name="habit_completed">%s marked as completed</string>
+    <string name="synced_with_server">Synced with server</string>
+    <string name="offline_mode_active">Offline mode - showing local data</string>
+    <string name="fill_all_fields">Please fill in all fields</string>
+    <string name="exporting">Exporting...</string>
+    <string name="language_changed">Language changed!</string>
+    <string name="already_here">You are already here!</string>
+    <string name="export_cancelled">Export cancelled by user.</string>
+    <string name="no_habits_export">No habits found to export. Check API URL and data.</string>
+    <string name="export_failed">Export Failed: %s</string>
+    <string name="export_success">Data exported successfully!</string>
+    <string name="file_save_failed">File save failed: %s</string>
+    <string name="auth_error">Authentication error. Please log in.</string>
+    <string name="reminder_at">Reminder: %s</string>
+    <string name="habit_saved_reminder">Habit saved! You\'ll get reminders at %s 🔔</string>
+    <string name="error_saving_habit">Error saving habit: %s</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Language -->
+    <string name="english">English</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="cancel">Cancel</string>
+    <string name="loading_quote">Loading quote...</string>
+
+    <!-- Add these to your existing strings.xml -->
+    <string name="your_habit_progress">Your Habit Progress</string>
+    <string name="progress_subtitle">Track your habit streaks and achievements here!</string>
+    <string name="progress_percentage">0%</string>
 </resources>

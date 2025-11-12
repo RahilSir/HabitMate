@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".SettingsActivity">
 
-    <!-- New: App Logo / Image -->
+    <!-- App Logo / Image -->
     <ImageView
         android:id="@+id/logoImageView"
         android:layout_width="131dp"
@@ -14,31 +13,30 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:contentDescription="HabitNow Logo"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/habitnow" />
 
-    <!-- New: App Name Heading -->
+    <!-- App Name Heading -->
     <TextView
         android:id="@+id/appHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoImageView"
-        android:text="HabitMate"
+        android:text="@string/app_name"
         android:textSize="28sp"
         android:textStyle="bold"
         android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="16dp"/>
 
-    <!-- Main Content Area: Title now sits below the app heading -->
+    <!-- Main Content Area -->
     <TextView
         android:id="@+id/settingsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appHeading"
-        android:text="Application Settings"
+        android:text="@string/settings_title"
         android:textSize="22sp"
-
         android:textStyle="bold"
         android:gravity="center"
         android:paddingBottom="8dp"/>
@@ -48,14 +46,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/settingsTitle"
-        android:text="Manage your account preferences and notifications here."
+        android:text="@string/settings_subtitle"
         android:paddingHorizontal="10dp"
         android:gravity="center"
         android:paddingBottom="16dp"
         android:textSize="16sp"/>
 
-
-    <!-- 1. Theme Switch (Left Aligned) -->
+    <!-- 1. Theme Switch -->
     <Switch
         android:id="@+id/themeSwitch"
         android:layout_width="match_parent"
@@ -64,40 +61,39 @@
         android:layout_marginTop="16dp"
         android:paddingHorizontal="15dp"
         android:paddingVertical="12dp"
-        android:text="Enable Dark Mode"
+        android:text="@string/dark_mode"
         android:textSize="18sp" />
 
-    <!-- 2. Switch Language (Feature Coming Soon) -->
-    <TextView
-        android:id="@+id/languageSetting"
+    <!-- 2. Language Switch Button -->
+    <Button
+        android:id="@+id/switchLanguageBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/themeSwitch"
-        android:paddingHorizontal="15dp"
-        android:layout_marginTop="8dp"
-        android:paddingVertical="12dp"
-        android:text="Switch Language (feature coming soon)"
-        android:textSize="18sp"
-        android:textColor="#616161"/> <!-- Dark Gray for non-actionable text -->
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:padding="16dp"
+        android:text="@string/switch_language"
+        android:textSize="18sp" />
 
-    <!-- 3. Export Data (Actionable Green) -->
+    <!-- 3. Export Data Button -->
     <Button
         android:id="@+id/exportDataSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/languageSetting"
-        android:paddingHorizontal="15dp"
-        android:layout_marginTop="24dp"
+        android:layout_below="@id/switchLanguageBtn"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:paddingVertical="14dp"
-        android:text="Export Data"
-        android:textSize="14sp"
-        android:textStyle="bold"
         android:backgroundTint="#4CAF50"
+        android:elevation="4dp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="14dp"
+        android:text="@string/export_data"
         android:textColor="@android:color/white"
-        android:elevation="4dp" />
-
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <!-- Bottom Navigation Bar -->
     <LinearLayout
@@ -110,38 +106,37 @@
         android:paddingTop="8dp"
         android:background="#F0F0F0">
 
-
-    <!-- Home Nav Button: Inactive - Dark Gray Text -->
+        <!-- Home Nav Button -->
         <Button
             android:id="@+id/homeNavBtn"
             android:layout_width="0dp"
             android:textSize="10sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home"
+            android:text="@string/nav_home"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#616161"
             android:backgroundTint="@android:color/transparent"/>
 
-        <!-- Progress Nav Button: Inactive - Dark Gray Text -->
+        <!-- Progress Nav Button -->
         <Button
             android:id="@+id/progressNavBtn"
             android:textSize="10sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Progress"
+            android:text="@string/nav_progress"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#616161"
             android:backgroundTint="@android:color/transparent"/>
 
-        <!-- Settings Nav Button: Active - Earthy Brown Text -->
+        <!-- Settings Nav Button -->
         <Button
             android:id="@+id/settingsNavBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Settings"
+            android:text="@string/nav_settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="#795548"
             android:textSize="10sp"

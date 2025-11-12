@@ -1,5 +1,6 @@
 package com.example.habittracker
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,9 +8,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.habittracker.models.Habit
+import com.example.habittracker.utils.LanguageHelper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
@@ -19,8 +22,6 @@ import java.net.URL
 import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
 
-// -----------------------------------------------------------------------------------
-
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var homeNavBtn: Button
@@ -28,24 +29,14 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var settingsNavBtn: Button
     private lateinit var themeSwitch: Switch
     private lateinit var exportDataSetting: Button
+    private lateinit var switchLanguageBtn: Button  // ✅ NEW
     private lateinit var prefs: SharedPreferences
 
     private var tempCsvContent: String? = null
     private val activityScope = CoroutineScope(Dispatchers.Main + Job())
 
-    // ⭐️ FIX: Append your collection name (e.g., "/habits") to your base URL.
     private val HABITS_API_URL = "https://68d973cb90a75154f0da715c.mockapi.io/habits"
 
-//private val HABITS_API_URL = " https://68d973cb90a75154f0da715c.mockapi.io/habits?userId=YOUR_USER_ID"
-
-
-
-
-
-
-    /**
-     * 1. Register the Activity Result Launcher for SAF (Storage Access Framework).
-     */
     private val createDocumentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         exportDataSetting.isEnabled = true
         exportDataSetting.text = "Export Data"
@@ -61,9 +52,18 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LanguageHelper.updateBaseContextLocale(newBase))
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ✅ Apply language BEFORE setContentView
+        LanguageHelper.applyLanguage(this)
+
         setContentView(R.layout.activity_settings)
 
         prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE)
@@ -73,6 +73,7 @@ class SettingsActivity : AppCompatActivity() {
         settingsNavBtn = findViewById(R.id.settingsNavBtn)
         themeSwitch = findViewById(R.id.themeSwitch)
         exportDataSetting = findViewById(R.id.exportDataSetting)
+        switchLanguageBtn = findViewById(R.id.switchLanguageBtn)  // ✅ NEW
 
         // --- Theme Logic ---
         val isDarkMode = prefs.getBoolean("DarkMode", false)
@@ -83,24 +84,24 @@ class SettingsActivity : AppCompatActivity() {
         )
 
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            // Save preference
             prefs.edit().putBoolean("DarkMode", isChecked).apply()
-
-            // Apply theme change
             AppCompatDelegate.setDefaultNightMode(
                 if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
         }
 
+        // ✅ Language switcher
+        switchLanguageBtn.setOnClickListener {
+            showLanguageDialog()
+        }
 
-        // --- Navigation Logic --- (Removed for brevity)
+        // --- Navigation Logic ---
         homeNavBtn.setOnClickListener { startActivity(Intent(this, HomeActivity::class.java)); finish() }
         progressNavBtn.setOnClickListener { startActivity(Intent(this, ProgressActivity::class.java)); finish() }
         settingsNavBtn.setOnClickListener { Toast.makeText(this, "You are already here!", Toast.LENGTH_SHORT).show() }
 
-
-        // --- EXPORT DATA LOGIC: Link the button to the export process ---
+        // --- EXPORT DATA LOGIC ---
         exportDataSetting.setOnClickListener {
             exportDataSetting.isEnabled = false
             exportDataSetting.text = "Exporting..."
@@ -113,51 +114,70 @@ class SettingsActivity : AppCompatActivity() {
         activityScope.cancel()
     }
 
-    /**
-     * Main export function: runs the network call in the background using a coroutine.
-     */
+    // ✅ NEW: Show language selection dialog
+    private fun showLanguageDialog() {
+        val languages = arrayOf(
+            getString(R.string.english),      // Add this string to resources
+            getString(R.string.afrikaans)     // Add this string to resources
+        )
+        val languageCodes = arrayOf("en", "af")
+
+        val currentLanguage = LanguageHelper.loadLanguage(this)
+        val currentIndex = languageCodes.indexOf(currentLanguage)
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.switch_language_title))  // Add this string to resources
+            .setSingleChoiceItems(languages, currentIndex) { dialog, which ->
+                val selectedLanguage = languageCodes[which]
+
+                LanguageHelper.setLanguage(this, selectedLanguage)
+
+                Toast.makeText(this, getString(R.string.language_changed), Toast.LENGTH_SHORT).show() // ✅ CHANGED
+
+                recreate()
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.cancel), null)  // Add this string to resources
+            .show()
+    }
     private fun exportHabitsToCSV() = activityScope.launch {
         try {
             Log.d("API_CALL", "Attempting to fetch habits from: $HABITS_API_URL")
 
-            // 1. Fetch data from API (runs on background thread Dispatchers.IO)
             val habitList = withContext(Dispatchers.IO) {
-                fetchHabitsFromApi() // Removed auth token parameter
+                fetchHabitsFromApi()
             }
 
             if (habitList.isNullOrEmpty()) {
-                Toast.makeText(this@SettingsActivity, "No habits found to export. Check API URL and data.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.no_habits_export),  // ✅ CHANGED
+                    Toast.LENGTH_LONG
+                ).show()
                 exportDataSetting.isEnabled = true
-                exportDataSetting.text = "Export Data"
+                exportDataSetting.text = getString(R.string.export_data)  // ✅ CHANGED
                 return@launch
             }
 
-            // 2. Convert to CSV format
             val csvContent = generateCsvContent(habitList)
-
-            // 3. Store content and launch SAF intent (runs on main thread)
             startSaveFileIntent(csvContent)
 
         } catch (e: Exception) {
-            Toast.makeText(this@SettingsActivity, "Export Failed: ${e.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@SettingsActivity,
+                getString(R.string.export_failed, e.message),  // ✅ CHANGED
+                Toast.LENGTH_LONG
+            ).show()
             Log.e("Export", "API/File operation failed", e)
             exportDataSetting.isEnabled = true
-            exportDataSetting.text = "Export Data"
+            exportDataSetting.text = getString(R.string.export_data)  // ✅ CHANGED
         }
     }
-
-
-    /**
-     * Fetches habit data from the custom API using URL and Gson (NO AUTH TOKEN).
-     * This runs on a background thread (Dispatchers.IO).
-     */
-    private fun fetchHabitsFromApi(): List<Habit>? { // Removed authToken parameter
+    private fun fetchHabitsFromApi(): List<Habit>? {
         var connection: HttpURLConnection? = null
         return try {
             val url = URL(HABITS_API_URL)
             connection = url.openConnection() as HttpURLConnection
-
-            // Removed Authorization Header logic for MockAPI
 
             connection.connectTimeout = 8000
             connection.readTimeout = 8000
@@ -181,10 +201,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
-    /**
-     * Converts a list of Habit objects into a CSV formatted string.
-     */
     private fun generateCsvContent(habits: List<Habit>): String {
         val header = "ID,User ID,Habit Name,Duration (Days),Days Active,Reminder Time,Is Completed\n"
         val builder = StringBuilder(header)
@@ -201,10 +217,6 @@ class SettingsActivity : AppCompatActivity() {
         return builder.toString()
     }
 
-
-    /**
-     * Uses Storage Access Framework (SAF) to let the user select a save location.
-     */
     private fun startSaveFileIntent(csvContent: String) {
         tempCsvContent = csvContent
 
@@ -217,9 +229,6 @@ class SettingsActivity : AppCompatActivity() {
         createDocumentLauncher.launch(intent)
     }
 
-    /**
-     * Writes the CSV content to the URI selected by the user.
-     */
     private fun writeCsvToUri(uri: Uri, csvContent: String) = activityScope.launch {
         try {
             withContext(Dispatchers.IO) {
@@ -228,15 +237,25 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
             runOnUiThread {
-                Toast.makeText(this@SettingsActivity, "Data exported successfully!", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.export_success),  // ✅ CHANGED
+                    Toast.LENGTH_LONG
+                ).show()
             }
         } catch (e: Exception) {
             Log.e("Export", "Writing to URI failed: ${e.message}", e)
             runOnUiThread {
-                Toast.makeText(this@SettingsActivity, "File save failed: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.file_save_failed, e.message),  // ✅ CHANGED
+                    Toast.LENGTH_LONG
+                ).show()
             }
         } finally {
             tempCsvContent = null
         }
     }
+
+
 }

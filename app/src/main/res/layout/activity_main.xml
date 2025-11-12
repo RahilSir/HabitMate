@@ -71,5 +71,23 @@
         android:textColor="@android:color/white"/>
 
 
+    <Button
+        android:id="@+id/googleSignInButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/white"
+        android:drawableLeft="@drawable/ic_google_logo"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="                Sign in with Google"
+        android:textAllCaps="false"
+        android:textColor="#3C4043"
+        android:textSize="14sp" />
+
+
+
 
 </LinearLayout>

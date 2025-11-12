@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gewoonte Tracker</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">Tuis</string>
+    <string name="add_habit">Voeg Gewoonte By</string>
+    <string name="no_habits">Geen gewoontes nog nie</string>
+    <string name="motivation_quote">Motivering vir die dag</string>
+
+    <!-- Add Habit Screen -->
+    <string name="add_new_habit">Voeg Nuwe Gewoonte By</string>
+    <string name="habit_name">Gewoonte Naam</string>
+    <string name="habit_name_hint">bv., Lees \'n boek</string>
+    <string name="duration">Duur (Dae)</string>
+    <string name="duration_hint">bv., 21</string>
+    <string name="reminder_time">Herinnering Tyd</string>
+    <string name="select_time">Kies Tyd</string>
+    <string name="save_habit">Stoor Gewoonte</string>
+    <string name="select_days">Kies Dae</string>
+    <string name="days_of_week">Dae van die Week</string>
+
+    <!-- Days of the week -->
+    <string name="monday">Maandag</string>
+    <string name="tuesday">Dinsdag</string>
+    <string name="wednesday">Woensdag</string>
+    <string name="thursday">Donderdag</string>
+    <string name="friday">Vrydag</string>
+    <string name="saturday">Saterdag</string>
+    <string name="sunday">Sondag</string>
+
+    <!-- Day abbreviations -->
+    <string name="day_monday_short">M</string>
+    <string name="day_tuesday_short">D</string>
+    <string name="day_wednesday_short">W</string>
+    <string name="day_thursday_short">Do</string>
+    <string name="day_friday_short">V</string>
+    <string name="day_saturday_short">Sa</string>
+    <string name="day_sunday_short">So</string>
+
+    <!-- Progress Screen -->
+    <string name="progress_title">Vordering</string>
+    <string name="completed_habits">Voltooide Gewoontes</string>
+    <string name="no_completed_habits">Geen voltooide gewoontes nog nie. Hou aan! 💪</string>
+    <string name="your_achievements">Jou Prestasies</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Instellings</string>
+    <string name="settings_subtitle">Bestuur jou rekening voorkeure en kennisgewings hier.</string>
+    <string name="language">Taal</string>
+    <string name="switch_language">Wissel Taal</string>
+    <string name="switch_language_title">Verander Taal</string>
+    <string name="dark_mode">Aktiveer Donker Modus</string>
+    <string name="export_data">Voer Data Uit</string>
+    <string name="logout">Teken Uit</string>
+    <string name="offline_mode">Vanlyn Modus</string>
+
+    <!-- Notifications -->
+    <string name="habit_reminder">Tyd vir jou gewoonte! 💪</string>
+    <string name="dont_forget">Moenie vergeet nie:</string>
+    <string name="streak_celebration">🔥 Ongelooflike %d Dag Reeks! 🔥</string>
+
+    <!-- Badges -->
+    <string name="badge_getting_started">Begin</string>
+    <string name="badge_week_warrior">Week Vegter</string>
+    <string name="badge_monthly_master">Maandelikse Meester</string>
+    <string name="badge_perfect_day">Perfekte Dag</string>
+
+    <!-- Toast Messages -->
+    <string name="habit_saved">Gewoonte gestoor!</string>
+    <string name="habit_completed">%s gemerk as voltooi</string>
+    <string name="synced_with_server">Gesinkroniseer met bediener</string>
+    <string name="offline_mode_active">Vanlyn modus - wys plaaslike data</string>
+    <string name="fill_all_fields">Vul asseblief al die velde in</string>
+    <string name="exporting">Besig om uit te voer...</string>
+    <string name="language_changed">Taal verander!</string>
+    <string name="already_here">Jy is reeds hier!</string>
+    <string name="export_cancelled">Uitvoer gekanselleer deur gebruiker.</string>
+    <string name="no_habits_export">Geen gewoontes gevind om uit te voer nie. Kontroleer API URL en data.</string>
+    <string name="export_failed">Uitvoer Misluk: %s</string>
+    <string name="export_success">Data suksesvol uitgevoer!</string>
+    <string name="file_save_failed">Lêer stoor misluk: %s</string>
+    <string name="auth_error">Verifikasie fout. Meld asseblief aan.</string>
+    <string name="reminder_at">Herinnering: %s</string>
+    <string name="habit_saved_reminder">Gewoonte gestoor! Jy sal herinneringe kry om %s 🔔</string>
+    <string name="error_saving_habit">Fout met stoor van gewoonte: %s</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Tuis</string>
+    <string name="nav_progress">Vordering</string>
+    <string name="nav_settings">Instellings</string>
+
+    <!-- Language -->
+    <string name="english">Engels</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="cancel">Kanselleer</string>
+    <string name="loading_quote">Laai aanhaling...</string>
+
+
+    <!-- Add these to your existing strings.xml (Afrikaans) -->
+    <string name="your_habit_progress">Jou Gewoonte Vordering</string>
+    <string name="progress_subtitle">Volg jou gewoonte reekse en prestasies hier!</string>
+    <string name="progress_percentage">0%</string>
+</resources>

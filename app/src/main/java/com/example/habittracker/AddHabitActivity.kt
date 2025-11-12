@@ -1,38 +1,47 @@
 package com.example.habittracker
 
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.habittracker.models.Habit
-import com.example.habittracker.network.RetrofitClient // <-- NEW: Import Retrofit Client
-import com.google.firebase.auth.FirebaseAuth // <-- KEEP: Used only for user ID
-import retrofit2.Call // <-- NEW: Retrofit Call
-import retrofit2.Callback // <-- NEW: Retrofit Callback
-import retrofit2.Response // <-- NEW: Retrofit Response
+import androidx.lifecycle.lifecycleScope
+import com.example.habittracker.notifications.ImprovedAlarmScheduler
+import com.example.habittracker.repository.HabitRepository
+import com.example.habittracker.utils.Constants
+import com.example.habittracker.utils.LanguageHelper
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import java.util.*
 
 class AddHabitActivity : AppCompatActivity() {
 
-    // Initialize Auth to get the current user's ID
     private lateinit var auth: FirebaseAuth
+    private var isOfflineMode = false
+    private lateinit var repository: HabitRepository
+
+    // ✅ ADD THIS for language support
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LanguageHelper.updateBaseContextLocale(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_habit)
 
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
         val currentUserId = auth.currentUser?.uid
 
-        // --- CRITICAL CHECK: Ensure user is logged in before proceeding ---
+        // Initialize repository
+        repository = HabitRepository(this)
+
         if (currentUserId == null) {
-            Toast.makeText(this, "Authentication error. Please log in.", Toast.LENGTH_LONG).show()
-            // Redirect or finish if user is not logged in
+            Toast.makeText(this, getString(R.string.auth_error), Toast.LENGTH_LONG).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -61,9 +70,10 @@ class AddHabitActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             val timePicker = TimePickerDialog(
                 this,
+                R.style.GreenTimePicker,
                 { _, hourOfDay, minute ->
                     selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-                    reminderTimeBtn.text = "Reminder: $selectedTime"
+                    reminderTimeBtn.text = getString(R.string.reminder_at, selectedTime)
                 },
                 cal.get(Calendar.HOUR_OF_DAY),
                 cal.get(Calendar.MINUTE),
@@ -72,7 +82,7 @@ class AddHabitActivity : AppCompatActivity() {
             timePicker.show()
         }
 
-        // --- RETROFIT POST LOGIC HERE (Replaces FirebaseDatabase logic) ---
+        // Save habit AND schedule notification
         saveHabitBtn.setOnClickListener {
             val name = habitNameInput.text.toString().trim()
             val durationString = durationInput.text.toString().trim()
@@ -80,38 +90,52 @@ class AddHabitActivity : AppCompatActivity() {
             val duration = durationString.toIntOrNull()
 
             if (name.isEmpty() || duration == null || days.isEmpty() || selectedTime == null) {
-                Toast.makeText(this, "Please fill in all fields correctly", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 1. Create the Habit object (CRITICAL: Includes the userId for filtering)
-            val newHabit = Habit(
-                userId = currentUserId, // <<< LINKS HABIT TO USER
-                habitName = name,
-                duration = duration,
-                days = days,
-                reminderTime = selectedTime!!
-            )
+            lifecycleScope.launch {
+                try {
+                    // Save habit and get the habit ID back
+                    val habitId = repository.addHabit(
+                        userId = currentUserId,
+                        habitName = name,
+                        days = days,
+                        reminderTime = selectedTime!!
+                    )
 
-            // 2. Make the Retrofit API call (POST request)
-            RetrofitClient.api.addHabit(newHabit)
-                .enqueue(object : Callback<Habit> {
-                    override fun onResponse(call: Call<Habit>, response: Response<Habit>) {
-                        if (response.isSuccessful) {
-                            // If successful, the habit is now saved on MockAPI.io
-                            Toast.makeText(this@AddHabitActivity, "Habit Saved via REST API!", Toast.LENGTH_LONG).show()
-                            finish()
-                        } else {
-                            // Display API error code (e.g., 404 if the URL is wrong)
-                            Toast.makeText(this@AddHabitActivity, "API Error: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                    Log.d("NotificationDebug", "Habit saved with ID: $habitId")
+                    Log.d("NotificationDebug", "Scheduling notification for: $selectedTime")
 
-                    override fun onFailure(call: Call<Habit>, t: Throwable) {
-                        // Display network failure (e.g., no internet connection)
-                        Toast.makeText(this@AddHabitActivity, "Network Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                    // Schedule the notification
+                    val scheduler = ImprovedAlarmScheduler(this@AddHabitActivity)
+                    scheduler.scheduleHabitReminder(habitId, name, selectedTime!!)
+
+                    Log.d("NotificationDebug", "✅ Notification scheduled successfully")
+
+                    Toast.makeText(
+                        this@AddHabitActivity,
+                        getString(R.string.habit_saved_reminder, selectedTime),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    finish()
+
+                } catch (e: Exception) {
+                    Log.e("NotificationDebug", "❌ Error: ${e.message}", e)
+                    Toast.makeText(
+                        this@AddHabitActivity,
+                        getString(R.string.error_saving_habit, e.message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        val userID = if (isOfflineMode) {
+            Constants.OFFLINE_USER_ID
+        } else {
+            auth.currentUser?.uid
         }
     }
 }

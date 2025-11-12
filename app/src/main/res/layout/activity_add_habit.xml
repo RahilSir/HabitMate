@@ -7,14 +7,13 @@
     android:padding="16dp"
     tools:context=".AddHabitActivity">
 
-
     <!-- 1. App Logo / Image: Centered at the top -->
     <ImageView
         android:id="@+id/logoImageView"
         android:layout_width="152dp"
         android:layout_height="138dp"
         android:layout_marginTop="16dp"
-        android:contentDescription="HabitNow Logo"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/habitnow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +24,7 @@
         android:id="@+id/screenTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Habit"
+        android:text="@string/add_new_habit"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="8dp"
@@ -34,14 +33,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
 
-    <!-- 3. Habit Name Label: Anchored BELOW the screen title -->
+    <!-- 3. Habit Name Label -->
     <TextView
         android:id="@+id/habitNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Habit Name"
+        android:text="@string/habit_name"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/screenTitle" />
@@ -53,7 +52,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:hint="e.g., Read a book"
+        android:hint="@string/habit_name_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Duration (days)"
+        android:text="@string/duration"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitNameInput" />
@@ -77,7 +76,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:hint="e.g., 21"
+        android:hint="@string/duration_hint"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,12 +88,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Reminder Time"
+        android:text="@string/reminder_time"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/durationInput" />
 
-    <!-- Select Time Button: Therapeutic Brown -->
     <Button
         android:id="@+id/reminderTimeBtn"
         android:layout_width="0dp"
@@ -102,7 +100,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:text="Select Time"
+        android:text="@string/select_time"
         android:backgroundTint="#795548"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Days of the Week"
+        android:text="@string/days_of_week"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reminderTimeBtn" />
@@ -137,47 +135,53 @@
             android:id="@+id/mondayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="M" />
+            android:text="@string/day_monday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/tuesdayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T" />
+            android:text="@string/day_tuesday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/wednesdayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="W" />
+            android:text="@string/day_wednesday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/thursdayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Th" />
+            android:text="@string/day_thursday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/fridayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="F" />
+            android:text="@string/day_friday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/saturdayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sa" />
+            android:text="@string/day_saturday_short"
+            android:buttonTint="#4CAF50" />
 
         <CheckBox
             android:id="@+id/sundayCheck"
             android:layout_width="59dp"
             android:layout_height="wrap_content"
-            android:text="Su" />
+            android:text="@string/day_sunday_short"
+            android:buttonTint="#4CAF50" />
 
     </LinearLayout>
 
-    <!-- Save Habit Button: Therapeutic Green -->
     <Button
         android:id="@+id/saveHabitBtn"
         android:layout_width="0dp"
@@ -185,7 +189,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Save Habit"
+        android:text="@string/save_habit"
         android:backgroundTint="#4CAF50"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

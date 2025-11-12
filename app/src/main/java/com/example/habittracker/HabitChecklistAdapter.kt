@@ -9,68 +9,83 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import com.example.habittracker.models.Habit
-import com.example.habittracker.network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.habittracker.repository.HabitRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class HabitChecklistAdapter(context: Context, habits: List<Habit>) :
-    ArrayAdapter<Habit>(context, 0, habits) {
+class HabitChecklistAdapter(
+    context: Context,
+    private val habits: MutableList<Habit>  // ✅ Keep reference to mutable list
+) : ArrayAdapter<Habit>(context, 0, habits) {
+
+    private val repository = HabitRepository(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context)
             .inflate(R.layout.list_item_habit, parent, false)
 
-        val habit = getItem(position)
+        val habit = getItem(position) ?: return view
+
         val habitNameTextView = view.findViewById<TextView>(R.id.habitNameTextView)
         val habitCheckBox = view.findViewById<CheckBox>(R.id.habitCheckBox)
 
-        if (habit != null) {
-            val durationStr = habit.duration?.toString() ?: "N/A"
-            val daysStr = habit.days?.joinToString(", ") ?: "No days set"
-            val habitText = "${habit.habitName} ($durationStr days) - ${habit.reminderTime}"
+        val durationStr = habit.duration?.toString() ?: "N/A"
+        val daysStr = habit.days?.joinToString(", ") ?: "No days set"
+        val habitText = "${habit.habitName} ($durationStr days) - ${habit.reminderTime}"
+        val streakTextView = view.findViewById<TextView>(R.id.streakTextView)
 
-            habitNameTextView.text = habitText
+        habitNameTextView.text = habitText
 
-            // Prevent recycling issues
-            habitCheckBox.setOnCheckedChangeListener(null)
-            habitCheckBox.isChecked = habit.isChecked
 
-            habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                habit.isChecked = isChecked
+        if (habit.currentStreak > 0) {
+            streakTextView.text = "🔥 ${habit.currentStreak} day streak!"
+            streakTextView.visibility = View.VISIBLE
+        } else {
+            streakTextView.visibility = View.GONE
+        }
 
-                // Show toast immediately
-                val status = if (isChecked) "completed" else "not completed"
-                Toast.makeText(
-                    context,
-                    "'${habit.habitName}' marked as $status for today.",
-                    Toast.LENGTH_SHORT
-                ).show()
 
-                // --- API call to save isChecked ---
-                val habitId = habit.id
-                if (!habitId.isNullOrEmpty()) {
-                    val statusUpdate = mapOf("isChecked" to isChecked)
-                    RetrofitClient.api.updateHabitCheckStatus(habitId, statusUpdate)
-                        .enqueue(object : Callback<Habit> {
-                            override fun onResponse(call: Call<Habit>, response: Response<Habit>) {
-                                if (!response.isSuccessful) {
-                                    Toast.makeText(
-                                        context,
-                                        "Failed to update '${habit.habitName}' on server",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
 
-                            override fun onFailure(call: Call<Habit>, t: Throwable) {
-                                Toast.makeText(
-                                    context,
-                                    "Network error: ${t.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        })
+        // ✅ CRITICAL: Remove listener before setting checked state
+        habitCheckBox.setOnCheckedChangeListener(null)
+        habitCheckBox.isChecked = habit.isChecked
+
+        // ✅ Set listener after initial state is set
+        habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            // Update in-memory immediately for smooth UI
+            habit.isChecked = isChecked
+
+            // Save to database in background
+            val habitId = habit.id
+            if (!habitId.isNullOrEmpty()) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        repository.updateHabitCheckedStatus(habitId, isChecked)
+
+                        // Optional: Show success message on main thread
+                        withContext(Dispatchers.Main) {
+                            val status = if (isChecked) "completed" else "unchecked"
+                            Toast.makeText(
+                                context,
+                                "'${habit.habitName}' $status",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            // Revert checkbox on error
+                            habit.isChecked = !isChecked
+                            habitCheckBox.isChecked = !isChecked
+
+                            Toast.makeText(
+                                context,
+                                "Error: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
             }
         }

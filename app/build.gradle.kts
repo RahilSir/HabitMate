@@ -1,7 +1,11 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Apply the Google Services plugin
+    id ("kotlin-kapt")
+
 }
 
 android {
@@ -39,6 +43,24 @@ android {
 
 dependencies {
 
+    // Room Database
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+
+    // WorkManager for background sync
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+    // Lifecycle
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+
+
     // ANDROIDX & CORE LIBRARIES
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -49,7 +71,7 @@ dependencies {
     // The BOM allows you to omit versions for individual Firebase libraries
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
-
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
@@ -98,6 +120,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 
 
 

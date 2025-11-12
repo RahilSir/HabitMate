@@ -11,7 +11,10 @@ data class Habit(
     var duration: Int? = null,
     var days: List<String>? = null,
     var reminderTime: String? = null,
-    var isChecked: Boolean = false
+    var isChecked: Boolean = false,
+    var currentStreak: Int = 0,      // ✅ ADD THIS
+    var longestStreak: Int = 0,      // ✅ ADD THIS
+    var lastCheckedDate: String = "" // ✅ ADD THIS
 )
 
 
