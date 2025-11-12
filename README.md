@@ -359,10 +359,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📸 Screenshots
 
-![Login Screen](screenshots/login.png)
-![Home Screen](screenshots/home.png)
-![Add Habit](screenshots/add_habit.png)
-![Progress](screenshots/progress.png)
+![Logo](screenshots/Logo.png)
+![Login Screen](screenshots/Login.png)
+![Home Screen](screenshots/Homepage.png)
+![Add Habit](screenshots/Add_Habit.png)
+![Progress](screenshots/Progress.png)
+![Settings](screenshots/Settings.png)
 
 ---
 
