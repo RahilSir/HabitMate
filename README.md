@@ -1,103 +1,345 @@
-# 🧠 Habit Tracker App
+🧠 HabitMate - Habit Tracker App
+A comprehensive Android habit tracking application built with Kotlin that helps users build and maintain positive habits with offline support, multi-language capabilities, and seamless cloud synchronization.
 
-A simple and effective Android app built in **Kotlin** using **Android Studio** that helps users build and maintain positive habits. The app allows users to add, track, and set reminders for their daily habits, storing the data securely in **Firebase Realtime Database**.
+📱 Overview
+HabitMate is a feature-rich habit tracking app that combines modern Android development practices with a focus on user experience. The app works seamlessly both online and offline, ensuring users never lose their progress regardless of connectivity.
+Core Capabilities
 
----
+✅ Create and track daily habits with customizable schedules
+✅ Set personalized reminders for each habit
+✅ Mark habits as complete and track progress over time
+✅ Offline-first architecture - works without internet connection
+✅ Automatic cloud synchronization when online
+✅ Multi-language support (English & Afrikaans)
+✅ Google Sign-In integration
+✅ Daily motivational quotes
+✅ Visual progress tracking with charts
 
-## 📱 Overview
 
-The **Habit Tracker App** enables users to:
-- Add new habits with a name, duration, and specific days of the week.
-- Set reminder times using a **TimePicker**.
-- Save all habits to **Firebase** for persistence.
-- Display confirmation messages upon successful or failed habit creation.
+✨ Key Features
+🎯 Habit Management
 
-The project follows a clean and modular structure, ensuring readability and scalability for future enhancements.
+Add habits with name, duration, and specific weekdays
+Set custom reminder times using TimePicker
+Mark habits as complete with checkbox tracking
+View all habits in an organized list view
+Edit and delete habits (soft delete with sync)
 
----
+📊 Progress Tracking
 
-## ✨ Key Features
+Circular progress indicator showing completion percentage
+View completed habits in a dedicated section
+Track habit streaks and consistency
+Visual feedback on daily progress
 
-✅ Add a habit with:
-- Habit name  
-- Duration (number of days)  
-- Selected weekdays (Monday–Sunday)  
-- Reminder time  
+🌐 Offline & Sync
 
-✅ Firebase integration for data storage  
-✅ Validation for input fields  
-✅ Real-time confirmation using **Toast messages**  
-✅ Modern Android UI with **XML layouts**
+Works completely offline - no internet required
+Local database storage using Room
+Automatic background synchronization via WorkManager
+Sync queue system tracks pending changes
+Conflict resolution with last-write-wins strategy
+Network status detection and user notifications
 
----
+👤 Authentication
 
-How to Run the App
+Email/Password authentication via Firebase
+Google Sign-In integration with custom branded button
+Offline Mode - use app without creating an account
+Secure user data isolation per account
+
+🌍 Localization
+
+Multi-language support (English & Afrikaans)
+In-app language switcher in Settings
+Persistent language preference
+Easy to add more languages
+
+🔔 Notifications
+
+Habit reminder notifications at set times
+Runtime permission handling for Android 13+
+Notification channels for organized alerts
+Customizable notification settings
+
+💡 Additional Features
+
+Daily motivational quotes with offline caching
+Clean Material Design UI
+Dark mode ready
+Responsive layouts for different screen sizes
+
+
+🏗️ Architecture
+Design Patterns
+
+Repository Pattern - Single source of truth for data
+MVVM Architecture - Separation of concerns
+LiveData - Reactive UI updates
+Offline-First - Local database as primary data source
+
+Project Structure
+app/
+├── database/
+│   ├── HabitEntity.kt          # Room entity for habits
+│   ├── HabitDao.kt             # Database access object
+│   ├── SyncQueueEntity.kt      # Tracks pending syncs
+│   ├── SyncQueueDao.kt         # Sync queue operations
+│   └── AppDatabase.kt          # Room database instance
+├── models/
+│   └── Habit.kt                # Data model for habits
+├── network/
+│   ├── RetrofitClient.kt       # API client setup
+│   ├── ApiService.kt           # API endpoints
+│   └── RetrofitClientQuotes.kt # Quotes API client
+├── repository/
+│   └── HabitRepository.kt      # Mediates between DB and API
+├── utils/
+│   ├── NetworkUtils.kt         # Network connectivity checks
+│   ├── NotificationHelper.kt   # Notification management
+│   ├── SyncScheduler.kt        # Background sync scheduler
+│   ├── LanguageManager.kt      # Language switching
+│   └── Constants.kt            # App-wide constants
+├── workers/
+│   └── SyncWorker.kt           # Background sync worker
+└── activities/
+    ├── MainActivity.kt          # Login screen
+    ├── RegisterActivity.kt      # Registration
+    ├── HomeActivity.kt          # Main habit list
+    ├── AddHabitActivity.kt      # Add new habits
+    ├── ProgressActivity.kt      # Progress tracking
+    └── SettingsActivity.kt      # App settings
+
+🔧 Technologies & Libraries
+ComponentTechnologyVersionLanguageKotlinLatestIDEAndroid StudioLadybug+Min SDKAndroid 7.0 (API 24)-Target SDKAndroid 14 (API 34)-
+Core Dependencies
+gradle// AndroidX Core
+implementation 'androidx.core:core-ktx:1.12.0'
+implementation 'androidx.appcompat:appcompat:1.6.1'
+implementation 'com.google.android.material:material:1.11.0'
+implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+// Firebase
+implementation platform('com.google.firebase:firebase-bom:33.1.2')
+implementation 'com.google.firebase:firebase-auth-ktx'
+implementation 'com.google.firebase:firebase-database-ktx'
+
+// Google Sign-In
+implementation 'com.google.android.gms:play-services-auth:20.7.0'
+
+// Room Database (Offline Storage)
+implementation 'androidx.room:room-runtime:2.6.1'
+implementation 'androidx.room:room-ktx:2.6.1'
+kapt 'androidx.room:room-compiler:2.6.1'
+
+// Coroutines
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+
+// WorkManager (Background Sync)
+implementation 'androidx.work:work-runtime-ktx:2.9.0'
+
+// Retrofit (REST API)
+implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+// Lifecycle Components
+implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+
+// Gson
+implementation 'com.google.code.gson:gson:2.10.1'
+
+🚀 Getting Started
+Prerequisites
+
+Android Studio Ladybug or newer
+Android SDK 24+
+Firebase account
+Google API Console project (for Google Sign-In)
+
+Installation
 
 Clone the repository:
 
-git clone https://github.com/<RahilSir>/HabitMate.git
+bashgit clone https://github.com/RahilSir/HabitMate.git
+cd HabitMate
+
+Firebase Setup:
+
+Go to Firebase Console
+Create a new project
+Add an Android app with your package name
+Download google-services.json
+Place it in app/ directory
+Enable Authentication (Email/Password & Google)
+Enable Realtime Database
 
 
-Open the project in Android Studio.
+Google Sign-In Setup:
 
-Connect an Android device or start an emulator.
-
-Click Run ▶️ to build and launch the app.
-
-
-
-- `AddHabitActivity.kt`: Handles the logic for creating and saving habits.  
-- `Habit.kt`: Data model defining a habit’s attributes.  
-- `activity_add_habit.xml`: The layout used for adding new habits.  
-
----
-
-## 🔧 Technologies Used
-
-| Component | Description |
-|------------|-------------|
-| **Language** | Kotlin |
-| **IDE** | Android Studio |
-| **Database** | Firebase Realtime Database |
-| **UI Design** | XML |
-| **Build Tool** | Gradle |
-
----
-
-## 🔥 Firebase Setup
-
-1. Go to [Firebase Console](https://console.firebase.google.com/).  
-2. Create a new project and connect it to your Android app.  
-3. Add the `google-services.json` file to:  
-
-4. In your app’s `build.gradle`, make sure these dependencies are added:
-```gradle
-implementation 'com.google.firebase:firebase-database:20.3.0'
-implementation 'com.google.firebase:firebase-analytics:21.5.0'
-// ANDROIDX & CORE LIBRARIES
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
-
-    // FIREBASE - Using Bill of Materials (BOM) for safe versioning
-    // The BOM allows you to omit versions for individual Firebase libraries
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+In Firebase Console, go to Authentication → Sign-in method
+Enable Google Sign-In
+Copy the Web client ID
+Add it to res/values/strings.xml:
 
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // GSON for easy JSON parsing (or use kotlinx.serialization)
-    implementation("com.google.code.gson:gson:2.10.1")
+xml   <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE</string>
+
+Get SHA-1 Fingerprint:
+
+bash# For Windows
+keytool -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+
+# For Mac/Linux
+keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+Add SHA-1 to Firebase Console → Project Settings → Your Android App
 
 
-    // Firebase Realtime Database KTX
-    implementation("com.google.firebase:firebase-database-ktx")
+Build and Run:
 
-    // Other Firebase dependencies you may need (like Auth for user ID)
-    implementation("com.google.firebase:firebase-auth-ktx")
+Open project in Android Studio
+Sync Gradle files
+Connect device or start emulator
+Click Run ▶️
 
 
 
 
+📖 How to Use
+First Time Setup
+
+Launch the app
+Choose one of three options:
+
+Login with email/password
+Register for a new account
+Continue in Offline Mode (no account needed)
+
+
+
+Adding Habits
+
+Tap the "Add Habit" button
+Enter habit name and duration
+Select days of the week
+Set reminder time
+Tap "Save"
+
+Tracking Progress
+
+Check off habits as you complete them
+View progress percentage in the Progress tab
+See completed habits list
+Track your streak
+
+Offline Mode
+
+All features work without internet
+Changes sync automatically when reconnected
+Pending sync count shown in status bar
+
+Settings
+
+Switch between English and Afrikaans
+Enable/disable notifications
+Manage notification permissions
+Exit offline mode and login
+
+
+🔥 API Integration
+Backend Endpoints
+The app uses MockAPI.io for demonstration. Replace with your own backend:
+kotlin// Base URL
+https://your-api.mockapi.io/api/v1/
+
+// Endpoints
+GET    /habits?userId={userId}     // Fetch user's habits
+POST   /habits                     // Create new habit
+PUT    /habits/{id}                // Update habit
+PATCH  /habits/{id}                // Update habit status
+DELETE /habits/{id}                // Delete habit
+Quotes API
+kotlinGET https://zenquotes.io/api/random  // Random motivational quote
+
+🎨 UI/UX Features
+
+Material Design 3 components
+Custom Google Sign-In button with branding
+Circular progress indicators
+Smooth animations and transitions
+Toast notifications for user feedback
+Pull-to-refresh support
+Empty state illustrations
+Loading indicators
+
+
+🔐 Security & Privacy
+
+✅ User authentication via Firebase Auth
+✅ Secure password handling (never stored locally)
+✅ User data isolation (each user sees only their data)
+✅ Offline data encrypted at rest
+✅ Network traffic over HTTPS
+✅ No third-party tracking
+✅ GDPR compliant data handling
+
+
+🌟 Future Enhancements
+
+ Habit categories and tags
+ Streak tracking and badges
+ Data export (CSV, PDF)
+ Social sharing features
+ Habit templates library
+ Advanced statistics and insights
+ Widget support
+ Wear OS companion app
+ Dark mode toggle
+ Habit notes and journaling
+
+
+🐛 Known Issues
+
+Notification icon needs custom design (currently using default)
+Progress percentage resets daily (needs persistent streak tracking)
+Google Sign-In requires internet (by design)
+
+
+🤝 Contributing
+Contributions are welcome! Please follow these steps:
+
+Fork the repository
+Create a feature branch (git checkout -b feature/AmazingFeature)
+Commit your changes (git commit -m 'Add some AmazingFeature')
+Push to the branch (git push origin feature/AmazingFeature)
+Open a Pull Request
+
+
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+👨‍💻 Author
+Rahil Sir
+
+GitHub: @RahilSir
+Email: rahilsirkissoon@gmail.com
+
+
+🙏 Acknowledgments
+
+Firebase for backend services
+Material Design for UI guidelines
+ZenQuotes API for motivational quotes
+Android community for amazing libraries
+
+
+
+📊 Project Status
+Current Version: 1.0.0
+Status: Active Development
+Last Updated: November 2025
+
+Built with ❤️ using Kotlin and Android Studio
