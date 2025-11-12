@@ -359,7 +359,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📸 Screenshots
 
-![Login Screen]([graphics/login.png](https://github.com/RahilSir/HabitMate/blob/main/Screenshot_20251112_153347.png))
+![Login Screen](screenshots/login.png)
 ![Home Screen](screenshots/home.png)
 ![Add Habit](screenshots/add_habit.png)
 ![Progress](screenshots/progress.png)
